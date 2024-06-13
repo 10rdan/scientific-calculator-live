@@ -14,7 +14,7 @@
                             <input 
                             id="calc-display"
                             readonly
-                            class="form-control form-control-lg"
+                            class="form-control form-control-lg text-end"
                             type="text"
                             aria-label=".form-control-lg example"
                             >
@@ -134,5 +134,50 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('Document is ready');
+                const display = document.getElementById('calc-display');
+                const buttons = document.getElementsByClassName('btn');
+                console.log(display);
+                console.log(buttons);
+
+                buttonArray = Array.from(buttons);   
+                
+                let currentValue = "";
+
+                function evaluateResult() {
+                    console.log('currentValue: ', currentValue)
+                    const convertedValue = currentValue.replace("x", "*").replace("÷", "/").replace("%", "*0.01");
+                    console.log('convertedValue: ', convertedValue);
+                    const result = eval(convertedValue);
+                    currentValue = result.toString();
+                    display.value = currentValue;
+                }
+
+                buttonArray.forEach(function (button) {
+                    console.log('button clicked', button.innerText);
+                    button.addEventListener('click', function() {
+                    console.log('first button clicked');
+                    const value = button.innerText;
+
+                    if (value == "AC") {
+                        currentValue = "";
+                        display.value = currentValue;
+                    } else if(value === "=") {
+                        evaluateResult();
+                    }
+                    
+                    else {
+                        currentValue += value;
+                        console.log('currenvalue:', currentValue);
+                        display.value = currentValue;
+                    }
+                });
+                });
+
+                
+            })
+        </script>
     </body>
 </html>
